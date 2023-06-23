@@ -1,34 +1,21 @@
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./Home.css";
-
-const data = [
-  {
-    name: "Adam Marcus",
-    email: "adam123@gmail.com",
-    contact: "83673677367635",
-    id: 1,
-  },
-  {
-    name: "Tom Cruise",
-    email: "tom@gmail.com",
-    contact: "83786646476",
-    id: 2,
-  },
-  {
-    name: "James Bond",
-    email: "james@gmail.com",
-    contact: "9484785787",
-    id: 3,
-  },
-];
+import {
+  useContactsQuery,
+  useDeleteContactMutation,
+} from "../services/contactsApi";
 
 const Home = () => {
+  const { data } = useContactsQuery();
+  const [deletContact] = useDeleteContactMutation();
   const handleDelete = async (id: any) => {
     if (window.confirm("Are you sure that you wanted to delete that user ?")) {
+      await deletContact(id);
       toast.success("Contact Deleted Successfully");
     }
   };
+
   return (
     <div style={{ marginTop: "100px" }}>
       <h2>Redux Toolkit RTK Query CRUD with React and JSON Server </h2>
